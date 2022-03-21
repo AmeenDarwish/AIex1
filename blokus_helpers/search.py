@@ -73,15 +73,21 @@ def depth_first_search(problem):
     print("Start's successors:", problem.get_successors(problem.get_start_state()))
     dfsStack = util.Stack()
     dfsStack.push(problem.get_start_state().state)
-
+    visited = []
+    path = []
     while (not dfsStack.isEmpty()):
         state = dfsStack.pop()
-        print(problem.expanded)
+
         if (problem.is_goal_state(state)):
-            return state
+            for s in dfsStack:
+                path.append(s[1])
+                return path
             # break
-        dfsStack.push(problem.get_successors(state))
-    return -1
+        for s in problem.get_successors(state):
+            if not s in visited:
+                dfsStack.push(s)
+                visited.append(s)
+    return path
 
 
 
